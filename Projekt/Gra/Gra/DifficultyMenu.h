@@ -8,6 +8,7 @@ class DifficultyMenu
 {
 
 private:
+	Text Question;
 	Font DifMenuFont;
 	Text menu[Options];//maksymalna liczba poziomow
 	int selectedItem = 1;

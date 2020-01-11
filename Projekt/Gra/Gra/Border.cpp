@@ -7,7 +7,7 @@ Border::Border(Vector2f size, Vector2f position)
 	body.setSize(size);
 	body.setOrigin(size / 2.0f);
 	body.setPosition(position);
-	body.setFillColor(Color(70, 70, 70));
+	body.setFillColor(Color(150, 150, 170));
 }
 
 

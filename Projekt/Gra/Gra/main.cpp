@@ -18,18 +18,21 @@ HOME:
 	int SureMenuOption = 0;
 	int menu_selected_flag = 0;
 	bool DifficultyMenuActive = false;
-	RenderWindow window(VideoMode(1200, 800), "The Dungeon Redmer");
+	RenderWindow window(VideoMode(1200, 1000), "The Dungeon Redmer");
 
 	Menu mainMenu(window.getSize().x, window.getSize().y);
 	DifficultyMenu DifMenu(window.getSize().x, window.getSize().y);
-	SureMenu sureMenu(window.getSize().x, window.getSize().y);
+	SureMenu sureMenu1(window.getSize().x, window.getSize().y);
+
 	int difficulty = 1;
+
 	while (window.isOpen())
 	{
 		Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
+				
 				window.close();
 			if (event.type == Event::KeyPressed)
 			{
@@ -89,13 +92,14 @@ HOME:
 						window.close();
 						//return 1;
 					}
-
 					if (event.key.code == Keyboard::Escape)
 					{
 						window.close();
 						menu_selected_flag = 1;
 					}
 				}
+
+				//difficullty menu
 				if (DifficultyMenuActive == true)
 				{
 					if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
@@ -112,16 +116,16 @@ HOME:
 						SureMenuOption = 1;
 
 						difficulty = 0;
-						//window.close();
 						DifficultyMenuActive = false;
+						window.close();
 						Levels LVL1(difficulty);
 						LVL1.Level1();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 1)
 					{
 						difficulty = 1;
-						window.close();
 						DifficultyMenuActive = false;
+						window.close();
 						Levels LVL1(difficulty);
 						LVL1.Level1();
 					}
@@ -143,7 +147,6 @@ HOME:
 						Levels LVL1(difficulty);
 						LVL1.Level1();
 					}
-
 				}
 			}
 		}
@@ -157,9 +160,11 @@ HOME:
 		{
 			DifMenu.draw(window);
 		}
-		//int SureMenu jest w levels.h
+
 		if (SureMenuOption == 1)
-			sureMenu.draw(window);
+		{
+			sureMenu1.draw(window);
+		}
 
 		window.display();
 	}

@@ -1,27 +1,5 @@
-﻿  Enemy.cpp
-  Levels.cpp
-c:\users\kubar\desktop\projektt\gra\gra\levels.cpp(324): warning C4244: "return": konwersja z "float" do "int", możliwa utrata danych
-  LevelUp.cpp
-  main.cpp
-c:\users\kubar\desktop\projektt\gra\gra\difficultymenu.h(6): warning C4005: "Options": ponowna definicja makra
-  c:\users\kubar\desktop\projektt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
-c:\users\kubar\desktop\projektt\gra\gra\suremenu.h(6): warning C4005: "Options": ponowna definicja makra
-  c:\users\kubar\desktop\projektt\gra\gra\difficultymenu.h(6): note: zobacz poprzednią definicję „Options”
-c:\users\kubar\desktop\projektt\gra\gra\main.cpp(23): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
-          with
-          [
-              T=unsigned int
-          ]
-c:\users\kubar\desktop\projektt\gra\gra\main.cpp(24): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
-          with
-          [
-              T=unsigned int
-          ]
-c:\users\kubar\desktop\projektt\gra\gra\main.cpp(25): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
-          with
-          [
-              T=unsigned int
-          ]
-c:\users\kubar\desktop\projektt\gra\gra\main.cpp(16): warning C4102: "HOME": etykieta, do której nie istnieje odwołanie
-  Generowanie kodu...
-  Gra.vcxproj -> C:\Users\KubaR\Desktop\Projektt\Gra\Debug\Gra.exe
+﻿  Levels.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(6): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\levels.cpp(353): warning C4244: "return": konwersja z "float" do "int", możliwa utrata danych
+  Gra.vcxproj -> C:\Users\KubaR\Desktop\Projekt\Projekt\Gra\Debug\Gra.exe

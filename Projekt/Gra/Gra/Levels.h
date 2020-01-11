@@ -10,6 +10,7 @@
 #include "Menu.h"
 #include "Border.h"
 #include "LevelUp.h"
+#include "SureMenu.h"
 
 using namespace sf;
 using namespace std;
@@ -31,4 +32,5 @@ private:
 	int playerDamage = 10;
 	bool inseane = false;
 	bool easy = false;
+	bool EscapeQuestion = false;
 };

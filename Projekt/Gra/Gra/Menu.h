@@ -8,7 +8,8 @@ class Menu
 {
 
 private:
-	Font MainMenuFont;
+	Text Sign;
+	Font MenuFont;
 	Text menu[Options];//maksymalna liczba poziomow
 	int selectedItem = 0;
 
