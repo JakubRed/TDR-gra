@@ -7,7 +7,7 @@ using namespace sf;
 class Border
 {
 public:
-	Border(Vector2f size, Vector2f position);
+	Border(Vector2f size, Vector2f position, int Option);
 	~Border();
 
 	void Draw(RenderWindow& window);

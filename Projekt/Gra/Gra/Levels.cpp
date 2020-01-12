@@ -6,27 +6,36 @@ Levels::~Levels()
 {
 }
 
-Levels::Levels(int difficulty)
+Levels::Levels(int difficulty, int option)
 {
+	switch (option)//default -> 60
+	{
+		case 1:
+			framerate = 30;
+			break;
+		case 2:
+			framerate = 144;
+			break;
+	}
+
 	//0 - Easy, 1 - Normal, 2 - Hard, 3 - Insane
 	switch (difficulty)
 	{
 	case 0://level easy
-
-		HP = 1000;
-		playerDamage = 50;
+		Level[1].HP = 1000;
+		Level[1].playerDamage = 50;
 		easy = true;
 		break;
 	case 1://level normal
-		HP = 500;
+		Level[1].HP = 500;
 		break;
 	case 2://level hard
-		HP = 500;
+		Level[1].HP = 500;
 		break;
-		playerDamage = 5;
+		Level[1].playerDamage = 5;
 	case 3://level inseane
-		HP = 250;
-		playerDamage = 5;
+		Level[1].HP = 250;
+		Level[1].playerDamage = 5;
 		inseane = true;
 		break;
 	}
@@ -36,63 +45,64 @@ int Levels::Level1()
 {
 	Clock clock;
 	RenderWindow window(VideoMode(900, 1000), "LVL 1 ", Style::Close | Style::Titlebar);
-	//View view(Vector2f(0.0f, 0.0f), Vector2f(800.0f, 800.0f));
-	//Gracz
 
-	SureMenu Sure1(400, 300);
-	Texture Background;
-	//Background.loadFromFile("../../SpriteSheetsS/LVL1/GreenBig.PNG");
-	Background.loadFromFile("../../SpriteSheetsS/LVL1/Background.JPG");
-	Sprite S1; //background
-	S1.setTexture(Background);
-	S1.setScale(1.56f,2.34f);
-	S1.setPosition(0.0f, 100.0f);
+		//textures
 
+		SureMenu Sure1(900, 1000);
+		Texture Background;
+		Background.loadFromFile("../../SpriteSheetsS/LVL1/Background.JPG");
+		Sprite S1; //background
+		S1.setTexture(Background);
+		S1.setScale(1.56f, 2.34f);
+		S1.setPosition(0.0f, 100.0f);
 
+		Texture heartPic;
+		heartPic.loadFromFile("../../SpriteSheetsS/Heart.png");
+		Enemy heart(&heartPic, Vector2u(5, 1), 0.15f, 100.0f, 50.0f, 0.0f);
 
-	Texture playerTexture;
-	playerTexture.loadFromFile("../../SpriteSheetsS/DerRitter.png");
+		Texture F1Help;
+		F1Help.loadFromFile("../../SpriteSheetsS/LVL1/Help.png");
 
-	Texture levelUpTexture;
-	levelUpTexture.loadFromFile("../../SpriteSheetsS/LVL1/Door.png");
+		Texture Key;
+		Key.loadFromFile("../../SpriteSheetsS/Key.png");
 
-	Texture Wall1;
-	Wall1.loadFromFile("../../SpriteSheetsS/LVL1/W.png");
+		Texture playerTexture;
+		playerTexture.loadFromFile("../../SpriteSheetsS/DerRitter.png");
 
-	Texture Wall2;
-	Wall2.loadFromFile("../../SpriteSheetsS/LVL1/W2.png");
+		Texture levelUpTexture;
+		levelUpTexture.loadFromFile("../../SpriteSheetsS/LVL1/Door.png");
 
-	Texture Wall3;
-	Wall3.loadFromFile("../../SpriteSheetsS/LVL1/W3.png");
+		Texture Wall1;
+		Wall1.loadFromFile("../../SpriteSheetsS/LVL1/W.png");
 
-	Texture Wall4;
-	Wall4.loadFromFile("../../SpriteSheetsS/LVL1/W4.png");
+		Texture Wall2;
+		Wall2.loadFromFile("../../SpriteSheetsS/LVL1/W2.png");
 
-	Texture Wall5;
-	Wall5.loadFromFile("../../SpriteSheetsS/LVL1/W5.png");
+		Texture Wall3;
+		Wall3.loadFromFile("../../SpriteSheetsS/LVL1/W3.png");
 
-	Texture Bar;
-	Bar.loadFromFile("../../SpriteSheetsS/LVL1/SkullBar.png");
+		Texture Wall4;
+		Wall4.loadFromFile("../../SpriteSheetsS/LVL1/W4.png");
 
-	Player player(&playerTexture, Vector2u(10, 15), HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f);
+		Texture Wall5;
+		Wall5.loadFromFile("../../SpriteSheetsS/LVL1/W5.png");
 
-	//level up door
+		Texture Bar;
+		Bar.loadFromFile("../../SpriteSheetsS/LVL1/SkullBar.png");
 
-	//LevelUp Door1(&playerTexture, Vector2u(10, 15), 0.25f, 857, 680);
-	LevelUp Door1(&levelUpTexture, Vector2u(6, 1), 0.10f, 857, 780);
-
-	bool open = false;
-	int CET = 0;
-	//czy przeciwnik istnieje
-	bool enemy1 = true, enemy2 = true, enemy3 = true, enemy4 = true, enemy5 = true;
-	//bool isNotAttacking = 1;//0 - player not attacking, 1 - player attacking (CET - ColliderEnemyType)
-
+		Player player(&playerTexture, Vector2u(10, 15), Level[1].HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f);
 
 	//Przeciwnicy
 	Texture skeletonTexture;
 	skeletonTexture.loadFromFile("../../SpriteSheetsS/LVL1/Skeleton.png");
+		//level up door
 
-	Enemy skeleton1(&skeletonTexture, Vector2u(9, 4), 0.25f, 450.0f, 550.0f, 120.0f);
+		//LevelUp Door1(&playerTexture, Vector2u(10, 15), 0.25f, 857, 680);
+		LevelUp Door1(&levelUpTexture, Vector2u(6, 1), 0.10f, 857, 780);
+	int CET = 0;
+	//bool isNotAttacking = 1;//0 - player not attacking, 1 - player attacking (CET - ColliderEnemyType)
+	   
+	Enemy skeleton1(&skeletonTexture, Vector2u(9, 4), 0.25f, 450.0f, 550.0f, 120.0f );
 	Enemy skeleton2(&skeletonTexture, Vector2u(9, 4), 0.25f, 250.0f, 170.0f, 210.0f);
 	Enemy skeleton3(&skeletonTexture, Vector2u(9, 4), 0.25f, 550.0f, 900.0f, 80.0f);
 	Enemy skeleton4(&skeletonTexture, Vector2u(9, 4), 0.25f, 60.0f, 300.0f, 200.0f);
@@ -114,8 +124,6 @@ int Levels::Level1()
 		skeleton4.speedMulti = 0.75;
 		skeleton5.speedMulti = 0.75;
 	}
-	cout << skeleton1.speedMulti;
-
 
 	//Przeszkody i inne objekty fizyczne (MAPA_POZIOMOW)
 	Platform platform1(&Wall2, Vector2f(320.f, 19.0f), Vector2f(500.0f, 220.0f));
@@ -127,17 +135,22 @@ int Levels::Level1()
 	Platform platform7(&Wall5, Vector2f(70.f, 130.0f), Vector2f(780.0f, 765.0f));
 	Platform platform8(&Wall4, Vector2f(120.f, 50.0f), Vector2f(860.0f, 725.0f));
 
+	//Platform HpQuantity(&Heart, Vector2f(40, 40), Vector2f(100.0f, 30.0f));
+
 	//granice
-	Border top(Vector2f(900.0f, 105.0f), Vector2f(450.0f, 51.0f));
-	Border left(Vector2f(105.0f, 900.0f), Vector2f(-51.0f, 550.0f));
-	Border right(Vector2f(105.0f, 900.0f), Vector2f(951.0f, 550.0f));
-	Border bottom(Vector2f(900.0f, 105.0f), Vector2f(450.0f, 1051.0f));
+	Border top(Vector2f(900.0f, 105.0f), Vector2f(450.0f, 51.0f), 0);
+	Border left(Vector2f(105.0f, 900.0f), Vector2f(-51.0f, 550.0f), 0);
+	Border right(Vector2f(105.0f, 900.0f), Vector2f(951.0f, 550.0f), 0);
+	Border bottom(Vector2f(900.0f, 105.0f), Vector2f(450.0f, 1051.0f), 0);
+
+	Border sureBorder(Vector2f(500, 300), Vector2f(475, 500), 1);
+	Platform f1help(&F1Help, Vector2f(800, 800), Vector2f(450, 550));
+	Platform key(&Key, Vector2f(30, 30), Vector2f(160, 950));
 
 	//SkullBar
 	Platform skulBar(&Bar, Vector2f(900.0f, 20.0f), Vector2f(450.0f, 93.0f));
-	
 
-	cout << "HP: " << HP << endl << "DMG: " << playerDamage << endl;
+	cout << "HP: " << Level[1].HP << endl << "DMG: " << Level[1].playerDamage << endl;
 
 	Vector2u size = window.getSize();
 	unsigned int width = size.x;//szerokosc
@@ -146,82 +159,82 @@ int Levels::Level1()
 	cout << "wysokosc=" << height << "\n";
 	cout << "Starting Hp: " << player.ReadHp() << endl;
 
-	if (EscapeQuestion == false)
+	while (window.isOpen())
 	{
-		while (window.isOpen())
+
+		Event LvL1;
+		while (window.pollEvent(LvL1))
 		{
-			window.setFramerateLimit(144);//set teh framerate
-
-			float deltaTime = 0.0f;
-			deltaTime = clock.restart().asSeconds();
-
-			Event ev;
-			while (window.pollEvent(ev))
+			if ((LvL1.type == sf::Event::KeyPressed) && (LvL1.key.code == sf::Keyboard::Escape))
 			{
-				switch (ev.type)
+				EscapeQuestion = true;
+				QuestionPause = false;
+			}
+			if ((LvL1.type == sf::Event::KeyPressed) && (LvL1.key.code == sf::Keyboard::F1))
+			{
+				QuestionPause = true;
+			}
+			if ((LvL1.type == sf::Event::KeyPressed) && (LvL1.key.code == sf::Keyboard::F2))
+			{
+				QuestionPause = false;
+			}
+			
+			//Wyjscie za pomoca Esc
+			if (EscapeQuestion == true)
+			{
+				if (LvL1.type == Event::KeyPressed)
 				{
-				case Event::Closed:
-					EscapeQuestion = true;
-					break;
+					if (LvL1.key.code == Keyboard::D || LvL1.key.code == Keyboard::Right)
+					{
+						Sure1.GOLEFT();
+					}
 
-					/*case Event::TextEntered:
-						if (evnt.text.unicode < 128)
-						{
-							printf("%c", evnt.text.unicode);
-						}
-						break;
-					 */
-				case Event::KeyPressed:
-					if (Keyboard::isKeyPressed(Keyboard::Enter))
-						EscapeQuestion = true;
-					break;
+					if (LvL1.key.code == Keyboard::A || LvL1.key.code == Keyboard::Left)
+					{
+						Sure1.goRight();
+					}
+					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 0 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 0)
+					{
+						window.close();
+					}
+					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 1 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 1)
+					{
+						EscapeQuestion = false;
+					}
 				}
 			}
+		}
+		window.setFramerateLimit(framerate);//set teh framerate
 
-			//poruszanie
-			player.Update(deltaTime);
+		float deltaTime = 0.0f;
+		deltaTime = clock.restart().asSeconds();
+			   		 
+		//sposób zderzania sie
 
-			Door1.doorAnimation(open, deltaTime);
+		//granice mapy
+		bottom.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
+		right.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
+		left.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
+		top.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
 
-			//start musi byæ mniejszy ni¿ end
-			if (enemy1)
-				skeleton1.Movement(3, 400.0f, 600.0f, deltaTime);
-			if (enemy2)
-				skeleton2.Movement(1, 310.0f, 620.0f, deltaTime);
-			if (enemy3)
-				skeleton3.Movement(1, 370.0f, 760.0f, deltaTime);
-			if (enemy4)
-				skeleton4.Movement(2, 150.0f, 820.0f, deltaTime);
-			if (enemy5)
-				skeleton5.Movement(2, 190.0f, 470.0f, deltaTime);
+		platform2.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform1.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform3.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform4.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform5.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform6.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform7.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
+		platform8.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
 
-			//sposób zderzania sie
-
-			//granice mapy
-			bottom.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
-			right.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
-			left.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
-			top.GetCollider().CheckColision(player.GetCollider(), 1.0f, 0, 0);
-
-
-			platform2.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform1.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform3.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform4.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform5.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform6.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform7.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-			platform8.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
-
-			//changes if player is attacking	
-			if (player.isAttacking == true)
-				CET = 2;
-			else
-				CET = 1;
+		//changes if player is attacking	
+		if (player.isAttacking == true)
+			CET = 2;
+		else
+			CET = 1;
 			//colisions and damage 
+		{
 			//collision with enemy1
-
-			if (enemy1 == true)
+			if (Level[1].enemy1 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -234,13 +247,12 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy1 hit" << endl;
-					skeleton1.HpLoss(playerDamage);
+					skeleton1.HpLoss(Level[1].playerDamage);
 					break;
 				}
 			}
 			//collision with enemy2
-
-			if (enemy2 == true)
+			if (Level[1].enemy2 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -253,14 +265,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy2 hit" << endl;
-					skeleton2.HpLoss(playerDamage);
+					skeleton2.HpLoss(Level[1].playerDamage);
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (enemy3 == true)
+			if (Level[1].enemy3 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -273,14 +285,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy3 hit" << endl;
-					skeleton3.HpLoss(playerDamage);
+					skeleton3.HpLoss(Level[1].playerDamage);
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (enemy4 == true)
+			if (Level[1].enemy4 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -293,14 +305,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy4 hit" << endl;
-					skeleton4.HpLoss(playerDamage);
+					skeleton4.HpLoss(Level[1].playerDamage);
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (enemy5 == true)
+			if (Level[1].enemy5 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -313,95 +325,138 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy5 hit" << endl;
-					skeleton5.HpLoss(playerDamage);
+					skeleton5.HpLoss(Level[1].playerDamage);
 					break;
 				}
 
 			}
 			//enemy killing
 			if (skeleton1.ReadHp() < 1)
-				enemy1 = false;
+				Level[1].enemy1 = false;
 			if (skeleton2.ReadHp() < 1)
-				enemy2 = false;
+				Level[1].enemy2 = false;
 			if (skeleton3.ReadHp() < 1)
-				enemy3 = false;
+				Level[1].enemy3 = false;
 			if (skeleton4.ReadHp() < 1)
-				enemy4 = false;
+				Level[1].enemy4 = false;
 			if (skeleton5.ReadHp() < 1)
-				enemy5 = false;
+				Level[1].enemy5 = false;
+		}
 			//sad ending
-			/*if (player.ReadHp() < 1)
+			if (player.ReadHp() < 1)
+			alive = false;
+
+			if (alive == false)
 			{
+				//return 666;
+			}
 
-				system("cls");
-				cout << "U DEAD!";
-				return 666;
-
-			}*/
+			
+			if (key.GetCollider().CheckColision(player.GetCollider(), 0, 0, 0) == 0)
+			{
+				keyVisible = false;
+			}
 
 			//first condition
-			if (enemy1 == false && enemy2 == false && enemy3 == false && enemy4 == false && enemy5 == false)
+			if (Level[1].enemy1 == false && Level[1].enemy2 == false && Level[1].enemy3 == false && Level[1].enemy4 == false && Level[1].enemy5 == false && keyVisible == false)
 			{
-				open = true;
-
+				Level[1].open = true;
 			}
 			//level complited
-			if (open == true)
+			if (Level[1].open == true)
 				if (Door1.GetCollider().CheckColision(player.GetCollider(), 0, 0, 0) == 0)
 				{
 					//add more stuf
 					return score;
-
 				}
+			
+				//poruszanie
+				//update
+				if (QuestionPause == false && EscapeQuestion == false)
+				{
+					Door1.doorAnimation(Level[1].open, deltaTime);
 
-			//ryswoanie
-			window.clear(); //clear old frame	
-			window.draw(S1);
+						player.Update(deltaTime);
 
-			//Rysowanie mapy
+						heart.Animate(deltaTime);
+				//start musi byæ mniejszy ni¿ end
+					if (Level[1].enemy1)
+						skeleton1.Movement(3, 400.0f, 600.0f, deltaTime);
+					if (Level[1].enemy2)
+						skeleton2.Movement(1, 310.0f, 620.0f, deltaTime);
+					if (Level[1].enemy3)
+						skeleton3.Movement(1, 370.0f, 760.0f, deltaTime);
+					if (Level[1].enemy4)
+						skeleton4.Movement(2, 150.0f, 820.0f, deltaTime);
+					if (Level[1].enemy5)
+						skeleton5.Movement(2, 190.0f, 470.0f, deltaTime);
+				}			
+				//ryswoanie
+				{
 
-			right.Draw(window);
-			left.Draw(window);
-			bottom.Draw(window);
-			top.Draw(window);
+					window.clear(); //clear old frame	
+					window.draw(S1);
+
+					//Rysowanie mapy
+
+					if (keyVisible)
+					key.Draw(window);
+
+					right.Draw(window);
+					left.Draw(window);
+					bottom.Draw(window);
+					top.Draw(window);
+
+					Door1.Draw(window);
+
+					platform4.Draw(window);
+					platform1.Draw(window);
+					platform2.Draw(window);
+					platform3.Draw(window);
+					platform5.Draw(window);
+					platform7.Draw(window);
+					platform7.Draw(window);
+					platform8.Draw(window);
+					platform6.Draw(window);
 
 
-			Door1.Draw(window);
+					player.Draw(window);
+					heart.Draw(window);
 
-			platform4.Draw(window);
-			platform1.Draw(window);
-			platform2.Draw(window);
-			platform3.Draw(window);
-			platform5.Draw(window);
-			platform7.Draw(window);
-			platform7.Draw(window);
-			platform8.Draw(window);
-			platform6.Draw(window);
+					if (Level[1].enemy1)
+						skeleton1.Draw(window);
+					if (Level[1].enemy2)
+						skeleton2.Draw(window);
+					if (Level[1].enemy3)
+						skeleton3.Draw(window);
+					if (Level[1].enemy4)
+						skeleton4.Draw(window);
+					if (Level[1].enemy5)
+						skeleton5.Draw(window);
 
+					skulBar.Draw(window);
 
-			player.Draw(window);
+					if (QuestionPause == true)
+					{
+						f1help.Draw(window);
+					}
+					if (EscapeQuestion == true)
+					{
+						sureBorder.Draw(window);
+						Sure1.draw(window);
+					}
+					if (alive == false)
+						Sure1.drawDead(window);
 
-			if (enemy1)
-				skeleton1.Draw(window);
-			if (enemy2)
-				skeleton2.Draw(window);
-			if (enemy3)
-				skeleton3.Draw(window);
-			if (enemy4)
-				skeleton4.Draw(window);
-			if (enemy5)
-				skeleton5.Draw(window);
-
-
-			skulBar.Draw(window);
-
-			window.display();
-		}
+					window.display();
+					/*}
+					else
+					{
+					Sure1.draw(window);
+					}*/
+				}
 	}
-	else
-	{
-	Sure1.draw(window);
-	}
+	
 	return 0;
 }
 

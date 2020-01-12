@@ -1,5 +1,22 @@
-﻿  Levels.cpp
-c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(6): warning C4005: "Options": ponowna definicja makra
-  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
-c:\users\kubar\desktop\projekt\projekt\gra\gra\levels.cpp(353): warning C4244: "return": konwersja z "float" do "int", możliwa utrata danych
+﻿  OptionMenu.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\optionmenu.cpp(20): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\optionmenu.cpp(26): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\optionmenu.cpp(32): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\optionmenu.cpp(38): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+          with
+          [
+              T=float
+          ]
   Gra.vcxproj -> C:\Users\KubaR\Desktop\Projekt\Projekt\Gra\Debug\Gra.exe

@@ -16,7 +16,6 @@ public:
 private:
 	Vector2u imageCount;
 	Vector2u currentImage;
-
 	float totalTime;
 	float switchTime;
 };

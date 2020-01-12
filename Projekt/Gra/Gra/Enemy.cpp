@@ -15,7 +15,10 @@ Enemy::Enemy(Texture* texture, Vector2u imageCount, float switchTime, float x_in
 
 	//render enemy according to speed 
 	float scale = 1.0;
-	if (speed >= 0 && speed <= 70)
+
+	if (speed == 0)
+		scale = 0.4;
+	if (speed > 0 && speed <= 70)
 		scale = 1.5;
 	if (speed >= 71 && speed <= 130)
 		scale = 1;
@@ -79,25 +82,28 @@ void Enemy::Movement(int option, float start, float end, float deltaTime)
 
 	movement.x += directionX * deltaTime * speed * speedMulti;
 	movement.y += directionY * deltaTime * speed * speedMulti;
-
-	if (movement.x > 0)
-	{
-		row = 3;
+	
+	if (movement.x != 0 || movement.y != 0)
+	{ 
+		if (movement.x > 0)
+		{
+			row = 3;
+		}
+		else if (movement.x < 0)
+		{
+			row = 1;
+		}
+		else if (movement.y > 0)
+		{
+			row = 2;
+		}
+		else if (movement.y < 0)
+		{
+			row = 0;
+		}
 	}
-	else if (movement.x < 0)
-	{
-		row = 1;
-	}
-	else if (movement.y > 0)
-	{
-		row = 2;
-	}
-	else if (movement.y < 0)
-	{
-		row = 0;
-	}
-
-	animation.Update(row, deltaTime, faceRight);
+	
+	animation.Update(row, deltaTime, 1);
 	body.setTextureRect(animation.uvRect);
 	body.move(movement);
 }
@@ -110,5 +116,11 @@ void Enemy::Draw(RenderWindow& window)
 int Enemy::ReadHp()
 {
 	return HP;
+}
+
+void Enemy::Animate(float deltaTime)
+{
+	animation.Update(row, deltaTime, 1);
+	body.setTextureRect(animation.uvRect);
 }
 

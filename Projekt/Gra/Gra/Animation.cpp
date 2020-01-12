@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Animation.h"
 #include <iostream>
-
+#include "Levels.h"
 Animation::Animation(Texture* texture, Vector2u imageCount, float switchTime)
 {
 	this->imageCount = imageCount;
@@ -19,32 +19,37 @@ Animation::~Animation()
 
 void Animation::Update(int row, float deltaTime, int faceDirection)
 {
-	currentImage.y = row;
-	totalTime += deltaTime;
+		totalTime += deltaTime;
+		currentImage.y = row;
 
-	if (totalTime >= switchTime)
-	{
-		totalTime -= switchTime;
-		currentImage.x++;
+		if (totalTime >= switchTime)
+		{
+			currentImage.y = row;
+			totalTime -= switchTime;
+			currentImage.x++;
 
-		if (currentImage.x >= imageCount.x)
-		{
-			currentImage.x = 0;
+			if (currentImage.x >= imageCount.x)
+			{
+				currentImage.y = row;
+				currentImage.x = 0;
+			}
 		}
-	}
-	else
-	{
-		uvRect.top = currentImage.y * uvRect.height;
+		else
+		{
+			uvRect.top = currentImage.y * uvRect.height;
 
-		if (faceDirection == 1)
-		{
-			uvRect.left = currentImage.x * uvRect.width;
-			uvRect.width = abs(uvRect.width);
+			if (faceDirection == 1)
+			{
+				currentImage.y = row;
+				uvRect.left = currentImage.x * uvRect.width;
+				uvRect.width = abs(uvRect.width);
+			}
+			else if (faceDirection == 2)
+			{
+				currentImage.y = row;
+				uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
+				uvRect.width = -abs(uvRect.width);
+			}
 		}
-		else if (faceDirection == 2)
-		{
-			uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
-			uvRect.width = -abs(uvRect.width);
-		}
-	}
+	
 }

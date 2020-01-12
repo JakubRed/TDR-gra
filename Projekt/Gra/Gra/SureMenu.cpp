@@ -12,23 +12,30 @@ SureMenu::SureMenu(float width, float height)
 		cout << "Brak czcionki!";
 		return;
 	}
-	Question.setCharacterSize(64);
+
+	Question.setCharacterSize(40);
 	Question.setFont(SureMenuFont);
 	Question.setString("Are you sure?");
-	Question.setFillColor(Color::Red);
-	Question.setPosition(Vector2f(width /2.5, height / 5.6));
+	Question.setFillColor(Color(237, 170, 14));
+	Question.setPosition(Vector2f(width / 2.3, height / 2.6));
+
+	Dead.setCharacterSize(140);
+	Dead.setFont(SureMenuFont);
+	Dead.setString("YOU DIED");
+	Dead.setFillColor(Color::Red);
+	Dead.setPosition(Vector2f(width / 4.3, height / 2.4));
 
 	SureMenuOption[0].setFont(SureMenuFont);
-	SureMenuOption[0].setCharacterSize(64);
-	SureMenuOption[0].setFillColor(Color::Red);
+	SureMenuOption[0].setCharacterSize(50);
+	SureMenuOption[0].setFillColor(Color::White);
 	SureMenuOption[0].setString("Yes");
-	SureMenuOption[0].setPosition(Vector2f(width / (Options + 1.3) * 1, height / 2.6));
+	SureMenuOption[0].setPosition(Vector2f(width / (Options +1) * 1, height / 2));
 
 	SureMenuOption[1].setFont(SureMenuFont);
-	SureMenuOption[1].setCharacterSize(64);
-	SureMenuOption[1].setFillColor(Color::White);
+	SureMenuOption[1].setCharacterSize(40);
+	SureMenuOption[1].setFillColor(Color(237, 170, 14));
 	SureMenuOption[1].setString("No");
-	SureMenuOption[1].setPosition(Vector2f(width / (Options + 1.3) * 2, height / 2.6));
+	SureMenuOption[1].setPosition(Vector2f(width / (Options + 1) * 2, height / 2));
 }
 
 void SureMenu::draw(RenderWindow &window)
@@ -38,6 +45,11 @@ void SureMenu::draw(RenderWindow &window)
 		window.draw(SureMenuOption[i]);
 	}
 	window.draw(Question);
+}
+
+void SureMenu::drawDead(RenderWindow & window)
+{
+	window.draw(Dead);
 }
 
 
@@ -50,7 +62,7 @@ void SureMenu::GOLEFT()
 		selectedItem--;
 		if (selectedItem < 0)
 			selectedItem = Options - 1;
-		SureMenuOption[selectedItem].setFillColor(Color::Red);
+		SureMenuOption[selectedItem].setFillColor(Color(237, 170, 14));
 		SureMenuOption[selectedItem].setStyle(Text::Bold);
 	}
 }
@@ -64,7 +76,7 @@ void SureMenu::goRight()
 		selectedItem++;
 		if (selectedItem >= Options)
 			selectedItem = 0;
-		SureMenuOption[selectedItem].setFillColor(Color::Red);
+		SureMenuOption[selectedItem].setFillColor(Color(237, 170, 14));
 		SureMenuOption[selectedItem].setStyle(Text::Bold);
 	}
 

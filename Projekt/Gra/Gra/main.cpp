@@ -7,6 +7,7 @@
 #include "Menu.h"
 #include "DifficultyMenu.h"
 #include "SureMenu.h"
+#include "OptionMenu.h"
 
 using namespace sf;
 using namespace std;
@@ -15,87 +16,69 @@ int main()
 {
 HOME:
 	//<Menu
-	int SureMenuOption = 0;
 	int menu_selected_flag = 0;
 	bool DifficultyMenuActive = false;
 	RenderWindow window(VideoMode(1200, 1000), "The Dungeon Redmer");
 
+	OptionMenu optionMenu(window.getSize().x, window.getSize().y);	
+
+	//Credits
 	Menu mainMenu(window.getSize().x, window.getSize().y);
 	DifficultyMenu DifMenu(window.getSize().x, window.getSize().y);
-	SureMenu sureMenu1(window.getSize().x, window.getSize().y);
 
-	int difficulty = 1;
+	int level_nr = 1;
+	int difficulty = 1;	
+	int framerate = 60;
 
 	while (window.isOpen())
 	{
 		Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == Event::Closed)
-				
-				window.close();
+			if (event.type == Event::Closed)				
+				window.close(); 
+
 			if (event.type == Event::KeyPressed)
 			{
-
-
 				if (menu_selected_flag == 0)
 				{
 					if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
 					{
 						mainMenu.moveUp();
 					}
-
 					if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
 					{
 						mainMenu.moveDown();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && mainMenu.getSelectedItem() == 0 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 0)
 					{
-						Sleep(250);
-						cout << "Poziom 1" << endl;
+
+						Sleep(100);
 						DifficultyMenuActive = true;
 						menu_selected_flag = 1;
-
-						//Levels LVL1(difficulty);
-						//LVL1.Level1();
 					}
-					//Top score
+					//Continue
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 1)
 					{
-						system("cls");
-						cout << "Top Score:" << endl;
-						cout << "1. Wikusia";
-						menu_selected_flag = 1;
+						//bêdzie grubo
 					}
-
+					//options
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 2 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 2)
 					{
-						cout << "options" << endl;
-						menu_selected_flag = 1;
-						window.close();
-						//return 1;
+						menu_selected_flag = 2;
+						Sleep(100);
 					}
-
+					//credits
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 3 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 3)
 					{
+						menu_selected_flag = 3;
+						Sleep(100);
 
-						cout << "Credits" << endl;
-						cout << endl << "Made by Jakub Redmerski";
-						cout << endl << "Artistic design Stanislaw Pomykacz";
-						menu_selected_flag = 1;
 					}
-
+					//exit
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 4 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 4)
 					{
-						cout << "EXIT" << endl;
-						menu_selected_flag = 1;
 						window.close();
-						//return 1;
-					}
-					if (event.key.code == Keyboard::Escape)
-					{
-						window.close();
-						menu_selected_flag = 1;
 					}
 				}
 
@@ -106,19 +89,16 @@ HOME:
 					{
 						DifMenu.moveUp();
 					}
-
 					if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
 					{
 						DifMenu.moveDown();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 0 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 0)
 					{
-						SureMenuOption = 1;
-
 						difficulty = 0;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels LVL1(difficulty);
+						Levels LVL1(difficulty, framerate);
 						LVL1.Level1();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 1)
@@ -126,7 +106,7 @@ HOME:
 						difficulty = 1;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels LVL1(difficulty);
+						Levels LVL1(difficulty, framerate);
 						LVL1.Level1();
 					}
 
@@ -135,7 +115,7 @@ HOME:
 						difficulty = 2;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels LVL1(difficulty);
+						Levels LVL1(difficulty, framerate);
 						LVL1.Level1();
 					}
 
@@ -144,9 +124,54 @@ HOME:
 						difficulty = 3;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels LVL1(difficulty);
+						Levels LVL1(difficulty, framerate);
 						LVL1.Level1();
 					}
+
+					if (event.key.code == Keyboard::Backspace || event.key.code == Keyboard::Escape)
+					{
+						menu_selected_flag = 0;
+						DifficultyMenuActive = false;
+					}
+				}
+
+				//option mennu
+				if (menu_selected_flag == 2)
+				{
+					if (event.key.code == Keyboard::D || event.key.code == Keyboard::Right)
+					{
+						optionMenu.goRight();
+					}
+					if (event.key.code == Keyboard::A || event.key.code == Keyboard::Left)
+					{
+						optionMenu.GOLEFT();
+					}
+					if (Keyboard::isKeyPressed(Keyboard::Enter) && optionMenu.getSelectedItem() == 0 || event.key.code == Keyboard::Space && optionMenu.getSelectedItem() == 0)
+					{
+						Sleep(100);
+						framerate = 30;
+						menu_selected_flag = 0;
+						DifficultyMenuActive = false;
+					}
+					if (Keyboard::isKeyPressed(Keyboard::Enter) && optionMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && optionMenu.getSelectedItem() == 1)
+					{
+						Sleep(100);
+						menu_selected_flag = 0;
+						DifficultyMenuActive = false;
+						
+					}
+					if (Keyboard::isKeyPressed(Keyboard::Enter) && optionMenu.getSelectedItem() == 2 || event.key.code == Keyboard::Space && optionMenu.getSelectedItem() == 2)
+					{
+						Sleep(100);
+						framerate = 144;
+						menu_selected_flag = 0;
+						DifficultyMenuActive = false;
+					}
+				}
+				if (event.key.code == Keyboard::Backspace || event.key.code == Keyboard::Escape)
+				{
+					menu_selected_flag = 0;
+					DifficultyMenuActive = false;
 				}
 			}
 		}
@@ -160,11 +185,12 @@ HOME:
 		{
 			DifMenu.draw(window);
 		}
+		if (menu_selected_flag == 3)
+			mainMenu.drawCredits(window);
 
-		if (SureMenuOption == 1)
-		{
-			sureMenu1.draw(window);
-		}
+		if (menu_selected_flag == 2)
+			optionMenu.draw(window);
+
 
 		window.display();
 	}

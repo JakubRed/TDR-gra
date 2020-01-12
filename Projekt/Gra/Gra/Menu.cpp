@@ -4,7 +4,7 @@
 #include <iostream>
 
 using namespace sf;
-using namespace std;
+using namespace std;	
 Menu::Menu(float width, float height)
 {
 	if (!MenuFont.loadFromFile("../../Fonts/GrandHotel-Regular.otf"))
@@ -28,7 +28,7 @@ Menu::Menu(float width, float height)
 	menu[1].setFont(MenuFont);
 	menu[1].setCharacterSize(64);
 	menu[1].setFillColor(Color::White);
-	menu[1].setString("Leaderbord");
+	menu[1].setString("Continue");
 	menu[1].setPosition(Vector2f(width / 2.6, height / (Options + 3) * 3.2));
 
 	menu[2].setFont(MenuFont);
@@ -49,6 +49,13 @@ Menu::Menu(float width, float height)
 	menu[4].setString("Exit");
 	menu[4].setPosition(Vector2f(width / 2.6, height / (Options + 3) * 6.2));
 
+	{//fraw credits
+		credits.setCharacterSize(80);
+		credits.setFont(MenuFont);
+		credits.setString("This Video Game Brought to You By:\n\n\t\t\tJakub Redmerski\n\n\t\t\t with the help of\n\t\t\tStanislaw Pomykacz");
+		credits.setFillColor(Color::Red);
+		credits.setPosition(Vector2f(width / 8.2,  height/ 8.2));
+	}
 }
 
 void Menu::draw(RenderWindow &window)
@@ -60,6 +67,12 @@ void Menu::draw(RenderWindow &window)
 	window.draw(Sign);
 }
 
+
+
+void Menu::drawCredits(RenderWindow & window)
+{
+	window.draw(credits);
+}
 
 void Menu::moveUp()
 {

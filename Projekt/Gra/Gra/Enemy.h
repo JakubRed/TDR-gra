@@ -34,6 +34,8 @@ public:
 	float speedMulti = 1.0;
 	int directionX = 1;
 	int directionY = 1;
+	void Animate( float deltaTime);
+
 
 private:
 	int HP = 50;
