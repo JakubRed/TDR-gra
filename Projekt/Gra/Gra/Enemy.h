@@ -28,6 +28,7 @@ public:
 	}
 
 public:
+	int *HpIndicator = &HP;
 	Vector2f position;
 	Vector2f movement;
 	float speed;

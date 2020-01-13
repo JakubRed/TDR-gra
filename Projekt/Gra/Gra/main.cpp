@@ -1,16 +1,21 @@
 #include "pch.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <Windows.h> //for sleep(1000)
+#include <Windows.h> //for Sleep(1000)
 #include <time.h>
 #include "Levels.h"
 #include "Menu.h"
 #include "DifficultyMenu.h"
 #include "SureMenu.h"
 #include "OptionMenu.h"
+#include <fstream>
 
 using namespace sf;
 using namespace std;
+void Kupa()
+{
+
+}
 
 int main()
 {
@@ -52,15 +57,28 @@ HOME:
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && mainMenu.getSelectedItem() == 0 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 0)
 					{
-
-						Sleep(100);
 						DifficultyMenuActive = true;
 						menu_selected_flag = 1;
+						Sleep(250);
 					}
 					//Continue
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 1)
 					{
-						//bêdzie grubo
+						Levels contin(difficulty, framerate);
+						contin.load();
+						
+							switch (contin.returnLevel())
+							{
+							case 1:
+								contin.Level1();
+								break;
+							case 2:
+								contin.Level2();
+								break;
+							case 3:
+								contin.Level3();
+								break;
+							}
 					}
 					//options
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 2 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 2)
@@ -106,8 +124,8 @@ HOME:
 						difficulty = 1;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels LVL1(difficulty, framerate);
-						LVL1.Level1();
+						Levels New(difficulty, framerate);
+						New.Level1();
 					}
 
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 2 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 2)
@@ -115,8 +133,8 @@ HOME:
 						difficulty = 2;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels LVL1(difficulty, framerate);
-						LVL1.Level1();
+						Levels New(difficulty, framerate);
+						New.Level1();
 					}
 
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 3 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 3)
@@ -124,8 +142,8 @@ HOME:
 						difficulty = 3;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels LVL1(difficulty, framerate);
-						LVL1.Level1();
+						Levels New(difficulty, framerate);
+						New.Level1();
 					}
 
 					if (event.key.code == Keyboard::Backspace || event.key.code == Keyboard::Escape)

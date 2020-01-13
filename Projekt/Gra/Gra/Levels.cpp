@@ -6,6 +6,78 @@ Levels::~Levels()
 {
 }
 
+
+void Levels::saveGame(bool enemy1, bool enemy2, bool enemy3, bool enemy4, bool enemy5, int hp, bool open, int gameDifficulty, int PosX, int PosY, bool keyVisible, int currentLevel)
+{
+
+	Save.open("../../Save/GameSave.txt", ios::out);
+
+	Save << enemy1;
+	Save << enemy2;
+	Save << enemy3;
+	Save << enemy4;
+	Save << enemy5;
+	Save << hp;
+	Save << open;
+	Save << gameDifficulty;
+	Save << PosX;
+	Save << PosY;
+	Save << keyVisible;
+	Save << currentLevel;
+
+	Save.close();
+}
+
+
+
+void Levels::load()
+{
+	int HP = 500;
+
+	Save.open("../../Save/GameSave.txt", ios::in);
+	if (Save.good() == false)
+	{
+		cout << "Plik nie istnieje";
+		//exit(0);
+	}
+
+	Save >> enemy1;
+	cout << enemy1 << endl;
+	Save >>	enemy2;
+	Save >> enemy3;
+	Save >> enemy4;
+	Save >> enemy5;
+	Save >> HP;
+	Save >> open;
+	Save >> gameDifficulty;
+	Save >> PosX;
+	Save >> PosY;
+	Save >> keyVisible;
+	Save >> currentLevel;
+
+	//Save >> currentLevel;
+	//Save >> keyVisible;
+	//Save >> PosY;
+	//Save >> PosX;
+	//Save >> gameDifficulty;
+	//Save >> open;
+	//Save >> HP;
+	//Save >> enemy5;
+	//Save >> enemy4;
+	//Save >> enemy3;
+	//Save >> enemy2;
+	//Save >> enemy1;
+	//cout << enemy1 << endl;
+
+	Save.close();
+
+}
+
+int Levels::returnLevel()
+{
+	return currentLevel;
+}
+
 Levels::Levels(int difficulty, int option)
 {
 	switch (option)//default -> 60
@@ -21,23 +93,21 @@ Levels::Levels(int difficulty, int option)
 	//0 - Easy, 1 - Normal, 2 - Hard, 3 - Insane
 	switch (difficulty)
 	{
-	case 0://level easy
-		Level[1].HP = 1000;
-		Level[1].playerDamage = 50;
-		easy = true;
-		break;
-	case 1://level normal
-		Level[1].HP = 500;
-		break;
-	case 2://level hard
-		Level[1].HP = 500;
-		break;
-		Level[1].playerDamage = 5;
-	case 3://level inseane
-		Level[1].HP = 250;
-		Level[1].playerDamage = 5;
-		inseane = true;
-		break;
+		gameDifficulty = difficulty;
+		case 0://level easy
+			 i = 0;
+			easy = true;
+			break;
+		case 1://level normal
+			i = 1;
+			break;
+		case 2://level hard
+			i = 2;
+			break;
+		case 3://level inseane
+			i = 3;
+			inseane = true;
+			break;
 	}
 }
 
@@ -45,8 +115,12 @@ int Levels::Level1()
 {
 	Clock clock;
 	RenderWindow window(VideoMode(900, 1000), "LVL 1 ", Style::Close | Style::Titlebar);
+	//enemy1 = true,enemy2 = true,	enemy3 = true,	enemy4 = true,	enemy5 = true;
+	currentLevel = 1;
 
 		//textures
+
+		//Poziom poz1;
 
 		SureMenu Sure1(900, 1000);
 		Texture Background;
@@ -58,7 +132,7 @@ int Levels::Level1()
 
 		Texture heartPic;
 		heartPic.loadFromFile("../../SpriteSheetsS/Heart.png");
-		Enemy heart(&heartPic, Vector2u(5, 1), 0.15f, 100.0f, 50.0f, 0.0f);
+		Enemy heart(&heartPic, Vector2u(5, 1), 0.15f, 400.0f, 50.0f, 0.0f);
 
 		Texture F1Help;
 		F1Help.loadFromFile("../../SpriteSheetsS/LVL1/Help.png");
@@ -90,7 +164,7 @@ int Levels::Level1()
 		Texture Bar;
 		Bar.loadFromFile("../../SpriteSheetsS/LVL1/SkullBar.png");
 
-		Player player(&playerTexture, Vector2u(10, 15), Level[1].HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f);
+		Player player(&playerTexture, Vector2u(10, 15), Dif[i].HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f);
 
 	//Przeciwnicy
 	Texture skeletonTexture;
@@ -150,7 +224,7 @@ int Levels::Level1()
 	//SkullBar
 	Platform skulBar(&Bar, Vector2f(900.0f, 20.0f), Vector2f(450.0f, 93.0f));
 
-	cout << "HP: " << Level[1].HP << endl << "DMG: " << Level[1].playerDamage << endl;
+	cout << "HP: " <<Dif[i].HP << endl << "DMG: " << Dif[1].playerDamage << endl;
 
 	Vector2u size = window.getSize();
 	unsigned int width = size.x;//szerokosc
@@ -195,6 +269,7 @@ int Levels::Level1()
 					}
 					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 0 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 0)
 					{
+						saveGame(enemy1,  enemy2,  enemy3,  enemy4,  enemy5, player.ReadHp(),  open, gameDifficulty,  PosX,  PosY,  keyVisible,  currentLevel);
 						window.close();
 					}
 					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 1 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 1)
@@ -226,6 +301,7 @@ int Levels::Level1()
 		platform7.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
 		platform8.GetCollider().CheckColision(player.GetCollider(), 1, 0, 0);
 
+
 		//changes if player is attacking	
 		if (player.isAttacking == true)
 			CET = 2;
@@ -234,7 +310,7 @@ int Levels::Level1()
 			//colisions and damage 
 		{
 			//collision with enemy1
-			if (Level[1].enemy1 == true)
+			if (enemy1 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -247,12 +323,12 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy1 hit" << endl;
-					skeleton1.HpLoss(Level[1].playerDamage);
+					*skeleton1.HpIndicator -= Dif[1].playerDamage;
 					break;
 				}
 			}
 			//collision with enemy2
-			if (Level[1].enemy2 == true)
+			if (enemy2 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -265,14 +341,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy2 hit" << endl;
-					skeleton2.HpLoss(Level[1].playerDamage);
+					*skeleton2.HpIndicator -= Dif[1].playerDamage;
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (Level[1].enemy3 == true)
+			if (enemy3 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -285,14 +361,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy3 hit" << endl;
-					skeleton3.HpLoss(Level[1].playerDamage);
+					*skeleton3.HpIndicator -= Dif[1].playerDamage;
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (Level[1].enemy4 == true)
+			if (enemy4 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -305,14 +381,14 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy4 hit" << endl;
-					skeleton4.HpLoss(Level[1].playerDamage);
+					*skeleton4.HpIndicator -= Dif[1].playerDamage;
 					break;
 				}
 			}
 
 			//collision with enemy1
 
-			if (Level[1].enemy5 == true)
+			if (enemy5 == true)
 			{
 				//fixed throwback
 				if (CET != 1)
@@ -325,22 +401,22 @@ int Levels::Level1()
 					break;
 				case 2:
 					cout << "enemy5 hit" << endl;
-					skeleton5.HpLoss(Level[1].playerDamage);
+					*skeleton5.HpIndicator -= Dif[1].playerDamage;
 					break;
 				}
 
 			}
 			//enemy killing
 			if (skeleton1.ReadHp() < 1)
-				Level[1].enemy1 = false;
+				enemy1 = false;
 			if (skeleton2.ReadHp() < 1)
-				Level[1].enemy2 = false;
+				enemy2 = false;
 			if (skeleton3.ReadHp() < 1)
-				Level[1].enemy3 = false;
+				enemy3 = false;
 			if (skeleton4.ReadHp() < 1)
-				Level[1].enemy4 = false;
+				enemy4 = false;
 			if (skeleton5.ReadHp() < 1)
-				Level[1].enemy5 = false;
+				enemy5 = false;
 		}
 			//sad ending
 			if (player.ReadHp() < 1)
@@ -358,12 +434,12 @@ int Levels::Level1()
 			}
 
 			//first condition
-			if (Level[1].enemy1 == false && Level[1].enemy2 == false && Level[1].enemy3 == false && Level[1].enemy4 == false && Level[1].enemy5 == false && keyVisible == false)
+			if (enemy1 == false && enemy2 == false && enemy3 == false && enemy4 == false && enemy5 == false && keyVisible == false)
 			{
-				Level[1].open = true;
+				open = true;
 			}
 			//level complited
-			if (Level[1].open == true)
+			if (open == true)
 				if (Door1.GetCollider().CheckColision(player.GetCollider(), 0, 0, 0) == 0)
 				{
 					//add more stuf
@@ -374,23 +450,26 @@ int Levels::Level1()
 				//update
 				if (QuestionPause == false && EscapeQuestion == false)
 				{
-					Door1.doorAnimation(Level[1].open, deltaTime);
+					Door1.doorAnimation(open, deltaTime);
 
 						player.Update(deltaTime);
 
 						heart.Animate(deltaTime);
 				//start musi byæ mniejszy ni¿ end
-					if (Level[1].enemy1)
+					if (enemy1)
 						skeleton1.Movement(3, 400.0f, 600.0f, deltaTime);
-					if (Level[1].enemy2)
+					if (enemy2)
 						skeleton2.Movement(1, 310.0f, 620.0f, deltaTime);
-					if (Level[1].enemy3)
+					if (enemy3)
 						skeleton3.Movement(1, 370.0f, 760.0f, deltaTime);
-					if (Level[1].enemy4)
+					if (enemy4)
 						skeleton4.Movement(2, 150.0f, 820.0f, deltaTime);
-					if (Level[1].enemy5)
+					if (enemy5)
 						skeleton5.Movement(2, 190.0f, 470.0f, deltaTime);
-				}			
+				}
+
+				//hp Animation (hp value update)
+				Sure1.showHp(player.ReadHp());
 				//ryswoanie
 				{
 
@@ -423,15 +502,15 @@ int Levels::Level1()
 					player.Draw(window);
 					heart.Draw(window);
 
-					if (Level[1].enemy1)
+					if (enemy1)
 						skeleton1.Draw(window);
-					if (Level[1].enemy2)
+					if (enemy2)
 						skeleton2.Draw(window);
-					if (Level[1].enemy3)
+					if (enemy3)
 						skeleton3.Draw(window);
-					if (Level[1].enemy4)
+					if (enemy4)
 						skeleton4.Draw(window);
-					if (Level[1].enemy5)
+					if (enemy5)
 						skeleton5.Draw(window);
 
 					skulBar.Draw(window);
@@ -447,6 +526,9 @@ int Levels::Level1()
 					}
 					if (alive == false)
 						Sure1.drawDead(window);
+
+					window.draw(Sure1.hpPlease());
+
 
 					window.display();
 					/*}

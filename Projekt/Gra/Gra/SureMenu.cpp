@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-using namespace sf;
-using namespace std;
+
 SureMenu::SureMenu(float width, float height)
 {
 	if (!SureMenuFont.loadFromFile("../../Fonts/GrandHotel-Regular.otf"))
@@ -12,6 +11,13 @@ SureMenu::SureMenu(float width, float height)
 		cout << "Brak czcionki!";
 		return;
 	}
+
+	hpSign.setStyle(Text::Bold);
+	hpSign.setCharacterSize(35);
+	hpSign.setPosition({ 450, 20 });
+	hpSign.setFont(SureMenuFont);
+	hpSign.setString(convert.str());
+	hpSign.setFillColor(Color::Red);
 
 	Question.setCharacterSize(40);
 	Question.setFont(SureMenuFont);
@@ -23,7 +29,9 @@ SureMenu::SureMenu(float width, float height)
 	Dead.setFont(SureMenuFont);
 	Dead.setString("YOU DIED");
 	Dead.setFillColor(Color::Red);
-	Dead.setPosition(Vector2f(width / 4.3, height / 2.4));
+	Dead.setPosition(Vector2f(width / 4.3, height / 2.4	));
+
+
 
 	SureMenuOption[0].setFont(SureMenuFont);
 	SureMenuOption[0].setCharacterSize(50);
@@ -53,6 +61,7 @@ void SureMenu::drawDead(RenderWindow & window)
 }
 
 
+
 void SureMenu::GOLEFT()
 {
 	if (selectedItem >= 0 && selectedItem < Options)
@@ -80,4 +89,11 @@ void SureMenu::goRight()
 		SureMenuOption[selectedItem].setStyle(Text::Bold);
 	}
 
+}
+
+void SureMenu::showHp(int hp)
+{
+	convert.str("");
+	convert << hp;
+	hpSign.setString(convert.str());
 }
