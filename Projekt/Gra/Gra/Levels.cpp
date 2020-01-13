@@ -7,32 +7,29 @@ Levels::~Levels()
 }
 
 
-void Levels::saveGame(bool enemy1, bool enemy2, bool enemy3, bool enemy4, bool enemy5, int hp, bool open, int gameDifficulty, int PosX, int PosY, bool keyVisible, int currentLevel)
+void Levels::saveGame(bool enemy1, bool enemy2, bool enemy3, bool enemy4, bool enemy5, int HP, bool open, int gameDifficulty, int PosX, int PosY, bool keyVisible, int currentLevel)
 {
 
 	Save.open("../../Save/GameSave.txt", ios::out);
 
-	Save << enemy1;
-	Save << enemy2;
-	Save << enemy3;
-	Save << enemy4;
-	Save << enemy5;
-	Save << hp;
-	Save << open;
-	Save << gameDifficulty;
-	Save << PosX;
-	Save << PosY;
-	Save << keyVisible;
-	Save << currentLevel;
+	Save << enemy1 << endl;
+	Save << enemy2 << endl;
+	Save << enemy3 << endl;
+	Save << enemy4 << endl;
+	Save << enemy5 << endl;
+	Save << HP << endl;
+	Save << open << endl;
+	Save << gameDifficulty << endl;
+	Save << PosX << endl;
+	Save << PosY << endl;
+	Save << keyVisible << endl;
+	Save << currentLevel << endl;
 
 	Save.close();
-}
-
-
+} 
 
 void Levels::load()
 {
-	int HP = 500;
 
 	Save.open("../../Save/GameSave.txt", ios::in);
 	if (Save.good() == false)
@@ -40,37 +37,26 @@ void Levels::load()
 		cout << "Plik nie istnieje";
 		//exit(0);
 	}
-
+	int savedHP, savedDiff;
 	Save >> enemy1;
-	cout << enemy1 << endl;
 	Save >>	enemy2;
 	Save >> enemy3;
 	Save >> enemy4;
 	Save >> enemy5;
-	Save >> HP;
+	Save >> savedHP;
+	cout << "savedHP: " << savedHP << endl;
 	Save >> open;
-	Save >> gameDifficulty;
+	Save >> savedDiff;
+	cout << "DIFF: " << gameDifficulty << endl;
 	Save >> PosX;
 	Save >> PosY;
 	Save >> keyVisible;
 	Save >> currentLevel;
 
-	//Save >> currentLevel;
-	//Save >> keyVisible;
-	//Save >> PosY;
-	//Save >> PosX;
-	//Save >> gameDifficulty;
-	//Save >> open;
-	//Save >> HP;
-	//Save >> enemy5;
-	//Save >> enemy4;
-	//Save >> enemy3;
-	//Save >> enemy2;
-	//Save >> enemy1;
-	//cout << enemy1 << endl;
-
 	Save.close();
-
+	HP = savedHP;
+	cout << "HP: " << HP << endl;
+	gameDifficulty = savedDiff;
 }
 
 int Levels::returnLevel()
@@ -78,7 +64,7 @@ int Levels::returnLevel()
 	return currentLevel;
 }
 
-Levels::Levels(int difficulty, int option)
+Levels::Levels(int difficulty, int option, bool Continued)
 {
 	switch (option)//default -> 60
 	{
@@ -89,11 +75,13 @@ Levels::Levels(int difficulty, int option)
 			framerate = 144;
 			break;
 	}
-
-	//0 - Easy, 1 - Normal, 2 - Hard, 3 - Insane
-	switch (difficulty)
+	if (Continued == false)//fixed with saving
 	{
 		gameDifficulty = difficulty;
+	}
+	//0 - Easy, 1 - Normal, 2 - Hard, 3 - Insane
+	switch (gameDifficulty)
+	{
 		case 0://level easy
 			 i = 0;
 			easy = true;
@@ -109,18 +97,17 @@ Levels::Levels(int difficulty, int option)
 			inseane = true;
 			break;
 	}
+	if (Continued == true)
+		Dif[i].HP = HP;
 }
 
 int Levels::Level1()
 {
+	cout << gameDifficulty << endl;
 	Clock clock;
 	RenderWindow window(VideoMode(900, 1000), "LVL 1 ", Style::Close | Style::Titlebar);
 	//enemy1 = true,enemy2 = true,	enemy3 = true,	enemy4 = true,	enemy5 = true;
 	currentLevel = 1;
-
-		//textures
-
-		//Poziom poz1;
 
 		SureMenu Sure1(900, 1000);
 		Texture Background;
@@ -164,7 +151,7 @@ int Levels::Level1()
 		Texture Bar;
 		Bar.loadFromFile("../../SpriteSheetsS/LVL1/SkullBar.png");
 
-		Player player(&playerTexture, Vector2u(10, 15), Dif[i].HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f);
+		Player player(&playerTexture, Vector2u(10, 15), Dif[i].HP /*(hp zmienia sie dla poziomow trudnosci)*/, 0.10f, 310.0f, PosX, PosY);		
 
 	//Przeciwnicy
 	Texture skeletonTexture;
@@ -172,8 +159,8 @@ int Levels::Level1()
 		//level up door
 
 		//LevelUp Door1(&playerTexture, Vector2u(10, 15), 0.25f, 857, 680);
-		LevelUp Door1(&levelUpTexture, Vector2u(6, 1), 0.10f, 857, 780);
-	int CET = 0;
+		  LevelUp Door1(&levelUpTexture, Vector2u(6, 1), 0.10f, 857, 780);
+
 	//bool isNotAttacking = 1;//0 - player not attacking, 1 - player attacking (CET - ColliderEnemyType)
 	   
 	Enemy skeleton1(&skeletonTexture, Vector2u(9, 4), 0.25f, 450.0f, 550.0f, 120.0f );
@@ -224,7 +211,7 @@ int Levels::Level1()
 	//SkullBar
 	Platform skulBar(&Bar, Vector2f(900.0f, 20.0f), Vector2f(450.0f, 93.0f));
 
-	cout << "HP: " <<Dif[i].HP << endl << "DMG: " << Dif[1].playerDamage << endl;
+	//cout << "HP: " <<Dif[i].HP << endl << "DMG: " << Dif[1].playerDamage << endl;
 
 	Vector2u size = window.getSize();
 	unsigned int width = size.x;//szerokosc
@@ -269,7 +256,7 @@ int Levels::Level1()
 					}
 					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 0 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 0)
 					{
-						saveGame(enemy1,  enemy2,  enemy3,  enemy4,  enemy5, player.ReadHp(),  open, gameDifficulty,  PosX,  PosY,  keyVisible,  currentLevel);
+						saveGame(enemy1,  enemy2,  enemy3,  enemy4,  enemy5, player.ReadHp(),  open, gameDifficulty,  player.GetPosition().x, player.GetPosition().y,  keyVisible,  currentLevel);
 						window.close();
 					}
 					if (LvL1.key.code == Keyboard::Enter && Sure1.getSelectedItem() == 1 || LvL1.key.code == Keyboard::Space && Sure1.getSelectedItem() == 1)
@@ -319,11 +306,10 @@ int Levels::Level1()
 				{
 				case 1:
 					player.HpLoss(10);
-					cout << endl << "Hp: " << player.ReadHp();
 					break;
 				case 2:
 					cout << "enemy1 hit" << endl;
-					*skeleton1.HpIndicator -= Dif[1].playerDamage;
+					*skeleton1.HpIndicator -= Dif[i].playerDamage;
 					break;
 				}
 			}
@@ -337,11 +323,10 @@ int Levels::Level1()
 				{
 				case 1:
 					player.HpLoss(10);
-					cout << endl << "Hp: " << player.ReadHp();
 					break;
 				case 2:
 					cout << "enemy2 hit" << endl;
-					*skeleton2.HpIndicator -= Dif[1].playerDamage;
+					*skeleton2.HpIndicator -= Dif[i].playerDamage;
 					break;
 				}
 			}
@@ -357,11 +342,10 @@ int Levels::Level1()
 				{
 				case 1:
 					player.HpLoss(10);
-					cout << endl << "Hp: " << player.ReadHp();
 					break;
 				case 2:
 					cout << "enemy3 hit" << endl;
-					*skeleton3.HpIndicator -= Dif[1].playerDamage;
+					*skeleton3.HpIndicator -= Dif[i].playerDamage;
 					break;
 				}
 			}
@@ -377,11 +361,10 @@ int Levels::Level1()
 				{
 				case 1:
 					player.HpLoss(10);
-					cout << endl << "Hp: " << player.ReadHp();
 					break;
 				case 2:
 					cout << "enemy4 hit" << endl;
-					*skeleton4.HpIndicator -= Dif[1].playerDamage;
+					*skeleton4.HpIndicator -= Dif[i].playerDamage;
 					break;
 				}
 			}
@@ -397,11 +380,10 @@ int Levels::Level1()
 				{
 				case 1:
 					player.HpLoss(10);
-					cout << endl << "Hp: " << player.ReadHp();
 					break;
 				case 2:
 					cout << "enemy5 hit" << endl;
-					*skeleton5.HpIndicator -= Dif[1].playerDamage;
+					*skeleton5.HpIndicator -= Dif[i].playerDamage;
 					break;
 				}
 

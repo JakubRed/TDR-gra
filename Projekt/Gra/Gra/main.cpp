@@ -64,7 +64,7 @@ HOME:
 					//Continue
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 1)
 					{
-						Levels contin(difficulty, framerate);
+						Levels contin(1, framerate, true);
 						contin.load();
 						
 							switch (contin.returnLevel())
@@ -116,7 +116,7 @@ HOME:
 						difficulty = 0;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels LVL1(difficulty, framerate);
+						Levels LVL1(difficulty, framerate, 0);
 						LVL1.Level1();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 1)
@@ -124,7 +124,7 @@ HOME:
 						difficulty = 1;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels New(difficulty, framerate);
+						Levels New(difficulty, framerate, 0);
 						New.Level1();
 					}
 
@@ -133,7 +133,7 @@ HOME:
 						difficulty = 2;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels New(difficulty, framerate);
+						Levels New(difficulty, framerate, 0);
 						New.Level1();
 					}
 
@@ -142,7 +142,7 @@ HOME:
 						difficulty = 3;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels New(difficulty, framerate);
+						Levels New(difficulty, framerate, 0);
 						New.Level1();
 					}
 

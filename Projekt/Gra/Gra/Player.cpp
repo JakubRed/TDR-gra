@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-Player::Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, float speed) :
+Player::Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, float speed, int PosX, int PosY) :
 	animation(texture, imageCount, switchTime)
 {
 	this->speed = speed;
@@ -13,7 +13,8 @@ Player::Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, 
 	HP = hp;
 	body.setSize(Vector2f(110.0f, 100.0f));
 	body.setOrigin(body.getSize() / 2.0f);
-	body.setPosition(780.0f, 220.0f);
+	//body.setPosition(780.0f, 220.0f);
+	body.setPosition(PosX, PosY);
 	body.setTexture(texture);
 }
 Player::~Player()
@@ -105,6 +106,7 @@ void Player::Update(float deltaTime) {
 	else
 	{
 		row = 1 + sType;
+		isAttacking = 0;
 	}
 
 	animation.Update(row, FastSwordWaving * deltaTime, faceDirection);

@@ -10,7 +10,7 @@ class Player
 
 public:
 
-	Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, float speed);
+	Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, float speed, int PosX, int PosY);
 	~Player();
 
 	void Update(float deltaTime);

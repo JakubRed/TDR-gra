@@ -1,12 +1,51 @@
-﻿  SureMenu.cpp
-c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.cpp(26): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+﻿  Animation.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(9): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\animation.cpp(12): warning C4244: "=": konwersja z "float" do "T", możliwa utrata danych
+          with
+          [
+              T=int
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\animation.cpp(13): warning C4244: "=": konwersja z "float" do "T", możliwa utrata danych
+          with
+          [
+              T=int
+          ]
+  Enemy.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(9): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\enemy.cpp(20): warning C4305: "=": obcięcie z "double" do "float"
+  Levels.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(9): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\levels.cpp(259): warning C4244: "argument": konwersja z "T" do "int", możliwa utrata danych
           with
           [
               T=float
           ]
-c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.cpp(32): warning C4244: "argument": konwersja z "double" do "T", możliwa utrata danych
+c:\users\kubar\desktop\projekt\projekt\gra\gra\levels.cpp(428): warning C4244: "return": konwersja z "float" do "int", możliwa utrata danych
+  main.cpp
+c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(9): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\menu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\difficultymenu.h(6): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\suremenu.h(9): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\optionmenu.h(6): warning C4005: "Options": ponowna definicja makra
+  c:\users\kubar\desktop\projekt\projekt\gra\gra\difficultymenu.h(6): note: zobacz poprzednią definicję „Options”
+c:\users\kubar\desktop\projekt\projekt\gra\gra\main.cpp(28): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
           with
           [
-              T=float
+              T=unsigned int
           ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\main.cpp(31): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\main.cpp(32): warning C4244: "argument": konwersja z "T" do "float", możliwa utrata danych
+          with
+          [
+              T=unsigned int
+          ]
+c:\users\kubar\desktop\projekt\projekt\gra\gra\main.cpp(22): warning C4102: "HOME": etykieta, do której nie istnieje odwołanie
+  Generowanie kodu...
   Gra.vcxproj -> C:\Users\KubaR\Desktop\Projekt\Projekt\Gra\Debug\Gra.exe
