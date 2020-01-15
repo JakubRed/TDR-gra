@@ -11,6 +11,7 @@ class SureMenu
 {
 
 private:
+	Text truth;
 	Text hpSign;
 	ostringstream convert;
 
@@ -30,6 +31,7 @@ public:
 	int getSelectedItem() { return selectedItem; }//zwroc poziom menu
 	void draw(RenderWindow &window);//rysuj menu w oknie
 	void drawDead(RenderWindow &window);
+	void Truth(RenderWindow &window);
 
 	void showHp(int hp);
 	Text hpPlease()

@@ -29,15 +29,19 @@ SureMenu::SureMenu(float width, float height)
 	Dead.setFont(SureMenuFont);
 	Dead.setString("YOU DIED");
 	Dead.setFillColor(Color::Red);
-	Dead.setPosition(Vector2f(width / 4.3, height / 2.4	));
+	Dead.setPosition(Vector2f(width / 4.3, height / 2.4));
 
-
+	truth.setCharacterSize(80);
+	truth.setFont(SureMenuFont);
+	truth.setString("THE FIGHT NEVER ENDS:(\n YOU MUST GO ON \n UNTIL YOU BREAK");
+	//truth.setFillColor(Color::Red);
+	truth.setPosition(Vector2f(width / 8, height / 2.4));
 
 	SureMenuOption[0].setFont(SureMenuFont);
 	SureMenuOption[0].setCharacterSize(50);
 	SureMenuOption[0].setFillColor(Color::White);
 	SureMenuOption[0].setString("Yes");
-	SureMenuOption[0].setPosition(Vector2f(width / (Options +1) * 1, height / 2));
+	SureMenuOption[0].setPosition(Vector2f(width / (Options + 1) * 1, height / 2));
 
 	SureMenuOption[1].setFont(SureMenuFont);
 	SureMenuOption[1].setCharacterSize(40);
@@ -60,6 +64,10 @@ void SureMenu::drawDead(RenderWindow & window)
 	window.draw(Dead);
 }
 
+void SureMenu::Truth(RenderWindow & window)
+{
+	window.draw(truth);
+}
 
 
 void SureMenu::GOLEFT()

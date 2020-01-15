@@ -12,14 +12,9 @@
 
 using namespace sf;
 using namespace std;
-void Kupa()
-{
-
-}
 
 int main()
 {
-HOME:
 	//<Menu
 	int menu_selected_flag = 0;
 	bool DifficultyMenuActive = false;
@@ -64,9 +59,8 @@ HOME:
 					//Continue
 					if (event.key.code == Keyboard::Enter && mainMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && mainMenu.getSelectedItem() == 1)
 					{
-						Levels contin(1, framerate, true);
-						contin.load();
-						
+						Levels contin(3, framerate, true);
+						window.close();
 							switch (contin.returnLevel())
 							{
 							case 1:
@@ -99,7 +93,6 @@ HOME:
 						window.close();
 					}
 				}
-
 				//difficullty menu
 				if (DifficultyMenuActive == true)
 				{
@@ -116,15 +109,15 @@ HOME:
 						difficulty = 0;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels LVL1(difficulty, framerate, 0);
-						LVL1.Level1();
+						Levels New(difficulty, framerate, false);
+						New.Level1();
 					}
 					if (Keyboard::isKeyPressed(Keyboard::Enter) && DifMenu.getSelectedItem() == 1 || event.key.code == Keyboard::Space && DifMenu.getSelectedItem() == 1)
 					{
 						difficulty = 1;
 						DifficultyMenuActive = false;
 						window.close();
-						Levels New(difficulty, framerate, 0);
+						Levels New(difficulty, framerate, false);
 						New.Level1();
 					}
 
@@ -133,7 +126,7 @@ HOME:
 						difficulty = 2;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels New(difficulty, framerate, 0);
+						Levels New(difficulty, framerate, false);
 						New.Level1();
 					}
 
@@ -142,7 +135,7 @@ HOME:
 						difficulty = 3;
 						window.close();
 						DifficultyMenuActive = false;
-						Levels New(difficulty, framerate, 0);
+						Levels New(difficulty, framerate, false);
 						New.Level1();
 					}
 
@@ -208,8 +201,7 @@ HOME:
 
 		if (menu_selected_flag == 2)
 			optionMenu.draw(window);
-
-
+		
 		window.display();
 	}
 	return 8;

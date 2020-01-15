@@ -13,7 +13,6 @@ Player::Player(Texture* texture, Vector2u imageCount, int hp, float switchTime, 
 	HP = hp;
 	body.setSize(Vector2f(110.0f, 100.0f));
 	body.setOrigin(body.getSize() / 2.0f);
-	//body.setPosition(780.0f, 220.0f);
 	body.setPosition(PosX, PosY);
 	body.setTexture(texture);
 }
@@ -93,7 +92,7 @@ void Player::Update(float deltaTime) {
 	{
 		row = 4 + sType;
 		isAttacking = 1;
-		FastSwordWaving = 3;
+		FastSwordWaving = 3.5;
 	}
 	//idle
 	else if (movement.x == 0.0f && movement.y == 0.0f)

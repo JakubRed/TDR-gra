@@ -28,7 +28,6 @@ public:
 	{
 		return Collider(body);
 	}
-public:
 	int swordType = 0; //0 - normal, 1 - blue, 2 - red
 	bool isAttacking = 0;
 	float positionX = body.getPosition().x;
