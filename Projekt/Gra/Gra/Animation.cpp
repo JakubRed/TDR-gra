@@ -21,12 +21,11 @@ void Animation::Update(int row, float deltaTime, int faceDirection)
 {
 		totalTime += deltaTime;
 		currentImage.y = row;
-
 		if (totalTime >= switchTime)
 		{
 			currentImage.y = row;
 			totalTime -= switchTime;
-			currentImage.x++;
+			currentImage.x++;			
 
 			if (currentImage.x >= imageCount.x)
 			{

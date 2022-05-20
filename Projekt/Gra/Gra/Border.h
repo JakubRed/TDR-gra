@@ -8,7 +8,7 @@ class Border
 {
 public:
 	Border(Vector2f size, Vector2f position, int Option);
-	~Border();
+	~Border();//kod dodany podczas zabawy z gitem
 
 	void Draw(RenderWindow& window);
 
